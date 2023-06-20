@@ -16,13 +16,13 @@ import re
 ######FUNCTIONS########
 #######################
 
-def get_is(stock, count, source, quarterly):
+def get_filing(statement, stock, count, source, quarterly):
     if quarterly ==1:
-        statement =ob.stocks.fa.income(symbol=stock, quarterly=True, limit=count, source=source)
-        return statement
+        filing = getattr(ob.stocks.fa, statement)(symbol=stock, quarterly=True, limit=count, source=source)
+        return filing
     else:
-        statement =ob.stocks.fa.income(symbol=stock, limit=count, source=source)
-        return statement
+        filing =getattr(ob.stocks.fa, statement)(symbol=stock, limit=count, source=source)
+        return filing
 
 def get_bs(stock, count, source, quarterly):
     if quarterly ==1:
@@ -79,6 +79,10 @@ stock = 'NVDA'
 count = 8
 source = 'AlphaVantage'
 
+i_s = 'income'
+b_s = 'balance'
+cfs = 'cash'
+
 #######################
 ######Execution########
 #######################
@@ -86,22 +90,33 @@ source = 'AlphaVantage'
 ##ob.stocks.load(symbol='NVDA', start_date='2018-01-01')
 
 #importing 8 quarterly is for nvda
-is_nvda = get_is(stock, count, source, 1)
+is_nvda = get_filing(i_s ,stock, count, source, 0)
+print(is_nvda)
 
 #formatting dataframe to convert str to float and dropping B&M
 is_nvda_clean = is_nvda.applymap(convert_to_float)
 print(is_nvda_clean)
 
 #importing 8 quarterly bs for nvda
-bs_nvda = get_bs(stock, count, source, 1)
+bs_nvda = get_filing(b_s ,stock, count, source, 1)
 
 #formatting dataframe to convert str to float and dropping B&M
 bs_nvda_clean = bs_nvda.applymap(convert_to_float)
 print(bs_nvda_clean)
 
 #importing 8 quarterly cfs for nvda
-cfs_nvda = get_cfs(stock, count, source, 1)
+cfs_nvda = get_filing(cfs ,stock, count, source, 1)
 
 #formatting dataframe to convert str to float and dropping B&M
 cfs_nvda_clean = cfs_nvda.applymap(convert_to_float)
-print(bs_nvda_clean)
+print(cfs_nvda_clean)
+
+'''
+
+-Now have quarterly fin filings for NVDA until 08-01-2021
+-Next reoder indices to reflect order they appear in filing
+-Consider: how will we calculate depreciation, etc. that are found in footnotes in SEC filings??
+    -have a function for user to enter that themselves?
+        -have functoin to pull up sec filing for them too?
+
+'''
