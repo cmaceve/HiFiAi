@@ -1,4 +1,4 @@
-print('Retrieving filings. Please wait.', end = '\r', flush= True)
+print('Retrieving filings. Please wait.')
 ######################
 #######IMPORTS########
 ######################
@@ -281,7 +281,14 @@ balance_df_final = order_rename(balance_df, rename_dict_bs, order_bs)
 cfs_df_final = order_rename(cfs_df, rename_dict_cfs, order_cfs)
 cfs_df_final.drop(['Proceeds From Issuance Of Long Term Debt And Capital Securities'], inplace = True)
 
-
+print('')
+print('$'+str(stock)+' FINANCIALS')
+print('----------------')
+print('INCOME STATEMENT')
 print(income_df_final)
+print('----------------')
+print('BALANCE SHEET')
 print(balance_df_final)
+print('----------------')
+print("STATEMENT OF CASH FLOWS")
 print(cfs_df_final)
