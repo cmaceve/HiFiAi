@@ -1,6 +1,9 @@
+print('Retrieving filings. Please wait.', end = '\r', flush= True)
 ######################
 #######IMPORTS########
 ######################
+
+print('|', end = '\r', flush= True)
 
 import pandas as pd
 import pandas_datareader as pdr
@@ -12,6 +15,7 @@ import statsmodels.api as sm
 from openbb_terminal.sdk import openbb as ob
 import re
 
+print('/', end = '\r', flush= True)
 #######################
 ######FUNCTIONS########
 #######################
@@ -40,6 +44,7 @@ def order_rename(df, names, order):
     df = df.rename(index=names)
     return df.reindex(order)
 
+print('--', end = '\r', flush= True)
 #######################
 ######VARIABLES########
 #######################
@@ -238,6 +243,7 @@ order_cfs = [
     'Net Income'
 ]
 
+print("\\", end = '\r', flush= True)
 #######################
 ######Execution########
 #######################
@@ -250,18 +256,22 @@ income_df = get_filing(i_s ,stock, count, source, 1)
 #formatting dataframe to convert str to float and dropping B&M
 income_df = income_df.applymap(convert_to_float)
 
+print('|', end = '\r', flush= True)
+
 #importing 8 quarterly bs for nvda
 balance_df = get_filing(b_s ,stock, count, source, 1)
 
 #formatting dataframe to convert str to float and dropping B&M
 balance_df = balance_df.applymap(convert_to_float)
 
+print('/', end = '\r', flush= True)
 #importing 8 quarterly cfs for nvda
 cfs_df = get_filing(cfs ,stock, count, source, 1)
 
 #formatting dataframe to convert str to float and dropping B&M
 cfs_df = cfs_df.applymap(convert_to_float)
 
+print('--', end = '\r', flush= True)
 #Formatting account names and reordering
 income_df = income_df.drop(['comprehensiveIncomeNetOfTax', 'ebit', 'depreciation'])
 income_df_final = order_rename(income_df, rename_dict_is, order_is)
