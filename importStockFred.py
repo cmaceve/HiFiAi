@@ -38,7 +38,6 @@ def convert_to_float(val):
 
 def order_rename(df, names, order):
     df = df.rename(index=names)
-
     return df.reindex(order)
 
 #######################
@@ -177,7 +176,6 @@ rename_dict_bs = {
  'retainedEarnings': 'Earnings', 'commonStock': 'Common Stock', 'commonStockSharesOutstanding': 'Common Stock Shares Outstanding'
 }
 
-
 rename_dict_cfs = {
     'reportedCurrency': 'Reported Currency',
     'operatingCashflow': 'Operating Cashflow',
@@ -264,17 +262,7 @@ cfs_df = get_filing(cfs ,stock, count, source, 1)
 #formatting dataframe to convert str to float and dropping B&M
 cfs_df = cfs_df.applymap(convert_to_float)
 
-'''
-
--Now have quarterly fin filings for NVDA until 08-01-2021
-
-CONSIDER CLASSES
-
--Consider: how will we calculate depreciation, etc. that are found in footnotes in SEC filings??
-    -have a function for user to enter that themselves?
-        -have functoin to pull up sec filing for them too?
-'''
-
+#Formatting account names and reordering
 income_df = income_df.drop(['comprehensiveIncomeNetOfTax', 'ebit', 'depreciation'])
 income_df_final = order_rename(income_df, rename_dict_is, order_is)
 
