@@ -67,7 +67,7 @@ series_ids = {
 start = "2017-01-01"
 
 income = 'income'
-stock = 'NVDA'
+stock = 'ORLY'
 count = 8
 source = 'AlphaVantage'
 
